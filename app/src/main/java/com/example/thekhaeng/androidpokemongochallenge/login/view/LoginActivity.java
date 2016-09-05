@@ -1,4 +1,4 @@
-package view;
+package com.example.thekhaeng.androidpokemongochallenge.login.view;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;

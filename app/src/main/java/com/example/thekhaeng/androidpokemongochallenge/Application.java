@@ -36,8 +36,15 @@ public abstract class Application extends android.app.Application{
         return mApplicationComponent;
     }
 
+
     // Needed to replace the component with a test specific one
-    public void setComponent( ApplicationComponent applicationComponent ){
-        mApplicationComponent = applicationComponent;
+    public void resetComponent(){
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule( new ApplicationModule( this ) )
+                .apiModule( new ApiModule() )
+                .managerModule( new ManagerModule() )
+                .build();
     }
+
+
 }

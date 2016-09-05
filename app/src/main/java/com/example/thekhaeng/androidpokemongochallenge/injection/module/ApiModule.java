@@ -2,31 +2,18 @@ package com.example.thekhaeng.androidpokemongochallenge.injection.module;
 
 //import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
 
-import android.content.Context;
-
 import com.example.thekhaeng.androidpokemongochallenge.BuildConfig;
 import com.example.thekhaeng.androidpokemongochallenge.constant.C;
 import com.example.thekhaeng.androidpokemongochallenge.http.ApiService;
-import com.example.thekhaeng.androidpokemongochallenge.http.MyAdapterFactory;
-import com.example.thekhaeng.androidpokemongochallenge.util.NetworkUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.Retrofit;

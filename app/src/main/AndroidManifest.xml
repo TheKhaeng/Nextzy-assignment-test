@@ -11,8 +11,8 @@
         android:required="true" />
 
     <application
-        android:allowBackup="true"
         android:name=".ApplicationImpl"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -25,15 +25,21 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAZuu4X10MErYDIcxAOyUh6xlSRLgLyfIM" />
 
-        <activity android:name="view.MainActivity">
-        </activity>
-        <activity android:name="view.LoginActivity">
+        <activity
+            android:name=".main.MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".login.view.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".main.PokemonService"/>
     </application>
+
+
 
 </manifest>

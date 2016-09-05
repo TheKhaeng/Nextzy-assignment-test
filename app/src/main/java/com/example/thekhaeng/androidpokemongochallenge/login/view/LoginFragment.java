@@ -1,9 +1,8 @@
-package view;
+package com.example.thekhaeng.androidpokemongochallenge.login.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,11 @@ import android.widget.Toast;
 import com.example.thekhaeng.androidpokemongochallenge.ApplicationImpl;
 import com.example.thekhaeng.androidpokemongochallenge.R;
 import com.example.thekhaeng.androidpokemongochallenge.http.ApiService;
-import com.example.thekhaeng.androidpokemongochallenge.http.LoginTokenDao;
-import com.example.thekhaeng.androidpokemongochallenge.manager.LoginManager;
+import com.example.thekhaeng.androidpokemongochallenge.http.dao.LoginTokenDao;
+import com.example.thekhaeng.androidpokemongochallenge.http.dao.MessageDao;
+import com.example.thekhaeng.androidpokemongochallenge.login.ProfileManager;
+import com.example.thekhaeng.androidpokemongochallenge.main.BaseFragment;
+import com.example.thekhaeng.androidpokemongochallenge.main.MainActivity;
 import com.example.thekhaeng.androidpokemongochallenge.util.VerifiedUtils;
 
 import javax.inject.Inject;
@@ -37,7 +39,7 @@ public class LoginFragment extends BaseFragment{
     private Unbinder unbinder;
     @Inject VerifiedUtils verifiedUtils;
     @Inject ApiService apiService;
-    @Inject LoginManager loginManager;
+    @Inject ProfileManager loginManager;
     @BindView( R.id.btn_next ) FancyButton btnSignIn;
     @BindView( R.id.edt_email ) EditText edtEmail;
     @BindView( R.id.edt_password ) EditText edtPassword;
@@ -63,6 +65,8 @@ public class LoginFragment extends BaseFragment{
         super.onCreate( savedInstanceState );
 
         ( (ApplicationImpl) getActivity().getApplication() ).getComponent().inject( this );
+
+        checkServer();
 
         init( savedInstanceState );
 
@@ -139,6 +143,26 @@ public class LoginFragment extends BaseFragment{
         // Restore instance state here
     }
     //</editor-fold>
+
+    private void checkServer(){
+            apiService.checkServer().enqueue( new Callback<MessageDao>() {
+                @Override
+                public void onResponse( Call<MessageDao> call, Response<MessageDao> response ){
+                    if ( response.isSuccessful() ) {
+                        showError( response.body().getMessage() );
+                    }else{
+                        showError( ERROR_LOGIN );
+                    }
+                }
+
+                @Override
+                public void onFailure( Call<MessageDao> call, Throwable t ){
+                    showError( t.getMessage());
+                    Timber.e( t, "Unable to load the books data from API." );
+                }
+//
+            } );
+    }
 
 
     private void login( String email, String pass){

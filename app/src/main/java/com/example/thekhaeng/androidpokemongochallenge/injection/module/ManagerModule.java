@@ -3,8 +3,9 @@ package com.example.thekhaeng.androidpokemongochallenge.injection.module;
 
 import android.content.Context;
 
-import com.example.thekhaeng.androidpokemongochallenge.manager.LoginManager;
-import com.example.thekhaeng.androidpokemongochallenge.manager.PoiManager;
+import com.example.thekhaeng.androidpokemongochallenge.login.ProfileManager;
+import com.example.thekhaeng.androidpokemongochallenge.main.PokemonManager;
+import com.example.thekhaeng.androidpokemongochallenge.map.PoiManager;
 import com.example.thekhaeng.androidpokemongochallenge.util.VerifiedUtils;
 
 import javax.inject.Singleton;
@@ -29,7 +30,13 @@ public class ManagerModule{
 
     @Provides
     @Singleton
-    public LoginManager provideLoginManager( Context context, VerifiedUtils verifiedUtils ){
-        return new LoginManager( context , verifiedUtils);
+    public ProfileManager provideLoginManager( Context context ){
+        return new ProfileManager( context );
+    }
+
+    @Provides
+    @Singleton
+    public PokemonManager providePokemonManager( Context context ){
+        return new PokemonManager( context );
     }
 }

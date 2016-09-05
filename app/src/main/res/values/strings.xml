@@ -7,4 +7,6 @@
     <string name="error_not_email">Is not email</string>
     <string name="error_name_empty">cannot empty.</string>
     <string name="error_login">Email or Password invalidate</string>
+    <string name="error_catch">Server not response.</string>
+    <string name="refresh">refresh</string>
 </resources>

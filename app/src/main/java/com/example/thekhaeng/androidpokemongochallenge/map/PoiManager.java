@@ -1,4 +1,4 @@
-package com.example.thekhaeng.androidpokemongochallenge.manager;
+package com.example.thekhaeng.androidpokemongochallenge.map;
 
 import android.content.Context;
 
@@ -12,19 +12,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PoiManager{
 
-    private BitmapDescriptor currentLocationBitmap;
     private Context mContext;
 
-    public PoiManager(Context context){
+    public PoiManager( Context context ){
         mContext = context;
     }
 
-    public void updateCurrentLocationPin( int res ){
-        currentLocationBitmap = BitmapDescriptorFactory.fromResource( res );
-    }
 
-    public Marker markCurrentLocationOnMap( GoogleMap mMap, LatLng latLng ){
-        MarkerOptions mark = getMarkOptionByLatLng( latLng, "Current Location", currentLocationBitmap );
+    public Marker markCurrentLocationOnMap( GoogleMap mMap, LatLng latLng, int resId ){
+        MarkerOptions mark = getMarkOptionByLatLng(
+                latLng,
+                "Current Location",
+                BitmapDescriptorFactory.fromResource( resId ) );
         Marker currentPOIMarker = mMap.addMarker( mark );
         mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(
                 latLng, 13 ) );
@@ -37,6 +36,18 @@ public class PoiManager{
                 .title( title )
                 .snippet( null )
                 .icon( icon );
+    }
+
+
+    public Marker getMarkerPokemonLocationOnMap( GoogleMap mMap, LatLng latLng, String name, int resId ){
+        MarkerOptions mark = getMarkOptionByLatLng(
+                latLng,
+                name,
+                BitmapDescriptorFactory.fromResource( resId ) );
+        Marker pokemonPOIMarker = mMap.addMarker( mark );
+        mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(
+                latLng, 13 ) );
+        return pokemonPOIMarker;
     }
 
 }

@@ -1,4 +1,4 @@
-package view;
+package com.example.thekhaeng.androidpokemongochallenge.main;
 
 import android.os.Handler;
 import android.support.design.widget.Snackbar;

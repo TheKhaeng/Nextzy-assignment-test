@@ -1,11 +1,18 @@
-package com.example.thekhaeng.androidpokemongochallenge.http;
+package com.example.thekhaeng.androidpokemongochallenge.http.dao;
 
 import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+
+import lombok.ToString;
 
 /**
  * Created by TheKhaeng on 9/5/2016.
  */
 
+@Parcel
+@ToString
 public class PokemonDao{
     @SerializedName( "expiration_timestamp" ) private  String exTime;
     @SerializedName( "latitude" ) private String lat;
@@ -14,6 +21,7 @@ public class PokemonDao{
     @SerializedName( "number" ) private String number;
     @SerializedName( "id" ) private String id;
 
+    @ParcelConstructor
     public PokemonDao(){}
 
     public PokemonDao(String exTime, String lat, String lng, String name, String number, String id ){

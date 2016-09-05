@@ -32,6 +32,7 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:paddingLeft="20dp"
+                android:text="ice001@nextzy.com"
                 android:textColor="@color/primaryTextLight"
                 android:textColorHint="@color/hintTextLight"
                 android:textSize="@dimen/body1_text_size" />
@@ -40,6 +41,7 @@
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_btn"
+                android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/normal_margin"
                 android:layout_marginLeft="@dimen/huge_margin"
                 android:layout_marginRight="@dimen/huge_margin"
@@ -50,9 +52,9 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:paddingLeft="20dp"
+                android:text="12345678"
                 android:textColor="@color/primaryTextLight"
                 android:textColorHint="@color/hintTextLight"
-                android:layout_centerInParent="true"
                 android:textSize="@dimen/body1_text_size" />
 
 
@@ -68,7 +70,7 @@
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
                 fancy:fb_borderColor="#0067a0"
-                fancy:fb_borderWidth="2dp"
+                fancy:fb_borderWidth="3dp"
                 fancy:fb_defaultColor="#FCC10B"
                 fancy:fb_focusColor="#0067a0"
                 fancy:fb_radius="30dp"

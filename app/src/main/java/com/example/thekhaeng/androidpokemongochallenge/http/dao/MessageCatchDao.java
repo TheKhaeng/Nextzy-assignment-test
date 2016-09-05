@@ -1,17 +1,28 @@
-package com.example.thekhaeng.androidpokemongochallenge.http;
+package com.example.thekhaeng.androidpokemongochallenge.http.dao;
+
+import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+import org.parceler.ParcelPropertyConverter;
 
 import java.util.ArrayList;
+
+import lombok.ToString;
 
 /**
  * Created by TheKhaeng on 9/5/2016.
  */
+
+@Parcel
+@ToString
 public class MessageCatchDao{
-    private String message;
-    private ArrayList<PokemonDao> pokemonDaos;
+    @SerializedName( "message" ) private String message;
+    @ParcelPropertyConverter( PokemonDaoListConverter.class)
+    @SerializedName( "data" ) private ArrayList<PokemonDao> pokemonDaos;
 
-    public MessageCatchDao(){
-
-    }
+    @ParcelConstructor
+    public MessageCatchDao(){ }
 
     public MessageCatchDao( String message, ArrayList<PokemonDao> pokemonDaos ){
 
