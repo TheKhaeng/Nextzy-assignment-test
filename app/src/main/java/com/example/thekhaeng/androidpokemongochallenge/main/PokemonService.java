@@ -17,8 +17,6 @@ import com.example.thekhaeng.androidpokemongochallenge.http.ApiService;
 import com.example.thekhaeng.androidpokemongochallenge.http.dao.MessageCatchDao;
 import com.example.thekhaeng.androidpokemongochallenge.http.dao.PokemonDao;
 import com.example.thekhaeng.androidpokemongochallenge.login.ProfileManager;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.SphericalUtil;
 
 import org.parceler.Parcels;
 
@@ -158,7 +156,7 @@ public class PokemonService extends Service{
 
     public void startPokemonCountTimeDelete( ArrayList<PokemonDao> pokemons ){
         for( final PokemonDao pokemon : pokemons ){
-             new DeletePokemonRunnale(pokemon , Long.parseLong( pokemon.getExTime()), 1000 ).start();
+             new DeletePokemonCountTime(pokemon , Long.parseLong( pokemon.getExTime()), 1000 ).start();
         }
     }
 
@@ -173,10 +171,10 @@ public class PokemonService extends Service{
     }
     //</editor-fold>
 
-    private class DeletePokemonRunnale extends CountDownTimer{
+    private class DeletePokemonCountTime extends CountDownTimer{
         private PokemonDao pokemon;
 
-        public DeletePokemonRunnale( PokemonDao pokemonDao ,long millisInFuture, long countDownInterval) {
+        public DeletePokemonCountTime( PokemonDao pokemonDao , long millisInFuture, long countDownInterval) {
             super(millisInFuture,countDownInterval);
             this.pokemon = pokemonDao;
         }
