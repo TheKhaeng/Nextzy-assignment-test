@@ -10,7 +10,6 @@ public class ApplicationImpl extends Application{
 
     @Override
     public void init(){
-        super.onCreate();
 
         Timber.plant( new Timber.DebugTree(){
             // Add the line number to the tag

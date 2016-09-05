@@ -6,6 +6,7 @@ import com.example.thekhaeng.androidpokemongochallenge.injection.component.Appli
 import com.example.thekhaeng.androidpokemongochallenge.injection.component.DaggerApplicationComponent;
 import com.example.thekhaeng.androidpokemongochallenge.injection.module.ApiModule;
 import com.example.thekhaeng.androidpokemongochallenge.injection.module.ApplicationModule;
+import com.example.thekhaeng.androidpokemongochallenge.injection.module.ManagerModule;
 
 
 public abstract class Application extends android.app.Application{
@@ -29,6 +30,7 @@ public abstract class Application extends android.app.Application{
             mApplicationComponent = DaggerApplicationComponent.builder()
                     .applicationModule( new ApplicationModule( this ) )
                     .apiModule( new ApiModule() )
+                    .managerModule( new ManagerModule() )
                     .build();
         }
         return mApplicationComponent;

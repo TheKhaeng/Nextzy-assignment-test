@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AndroidPokemonGoChallenge</string>
+    <string name="sign_out">Sign out</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="next">Next</string>
+    <string name="error_not_email">Is not email</string>
+    <string name="error_name_empty">cannot empty.</string>
+    <string name="error_login">Email or Password invalidate</string>
 </resources>

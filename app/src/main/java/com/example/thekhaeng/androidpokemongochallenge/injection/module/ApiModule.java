@@ -72,30 +72,10 @@ public class ApiModule{
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient( HttpLoggingInterceptor httpLoggingInterceptor,
-                                             Interceptor offlineCacheInterceptor,
-                                             Interceptor cacheInterceptor,
-                                             Cache cache ){
+    public OkHttpClient provideOkHttpClient( HttpLoggingInterceptor httpLoggingInterceptor ){
         return new OkHttpClient.Builder()
                 .addInterceptor( httpLoggingInterceptor )
-                .addInterceptor( offlineCacheInterceptor )
-                // If this request not hit the server, It's use OkHttp Cache.
-                .addNetworkInterceptor( cacheInterceptor )
-                .cache( cache )
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    public Cache provideCache( Context context ){
-        Cache cache = null;
-        try{
-            cache = new Cache( new File( context.getCacheDir(), HTTP_CACHE ),
-                    10 * 1024 * 1024 ); // 10 MB
-        }catch( Exception e ){
-            Timber.e( e, "Could not create Cache!" );
-        }
-        return cache;
     }
 
     @Provides
@@ -115,53 +95,10 @@ public class ApiModule{
         return httpLoggingInterceptor;
     }
 
-    @Provides
-    @Singleton
-    public Interceptor provideCacheInterceptor(){
-        return new Interceptor(){
-            @Override
-            public Response intercept( Chain chain ) throws IOException{
-                Response response = chain.proceed( chain.request() );
-
-                // re-write response header to force use of cache
-                CacheControl cacheControl = new CacheControl.Builder()
-                        .maxAge( 2, TimeUnit.MINUTES )
-                        .build();
-
-                return response.newBuilder()
-                        .header( CACHE_CONTROL, cacheControl.toString() )
-                        .build();
-            }
-        };
-    }
 
     @Provides
     @Singleton
-    public Interceptor provideOfflineCacheInterceptor( final Context context ){
-        return new Interceptor(){
-            @Override
-            public Response intercept( Chain chain ) throws IOException{
-                Request request = chain.request();
-
-                if( !NetworkUtil.isNetworkConnected( context ) ){
-                    CacheControl cacheControl = new CacheControl.Builder()
-                            // cache life time: 7 day
-                            .maxStale( 7, TimeUnit.DAYS )
-                            .build();
-
-                    request = request.newBuilder()
-                            .cacheControl( cacheControl )
-                            .build();
-                }
-
-                return chain.proceed( request );
-            }
-        };
-    }
-
-    @Provides
-    @Singleton
-    public static ApiService provideBookService( Retrofit retrofit ){
+    public ApiService provideBookService( Retrofit retrofit ){
         return retrofit.create( ApiService.class );
     }
 }
