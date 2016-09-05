@@ -7,6 +7,7 @@ import com.example.thekhaeng.androidpokemongochallenge.http.dao.PokemonDao;
 import com.example.thekhaeng.androidpokemongochallenge.util.VerifiedUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProfileManager{
@@ -18,6 +19,7 @@ public class ProfileManager{
 
     public ProfileManager( Context context){
         mContext = context;
+        mapPokemonDaos = new HashMap<>();
     }
 
 

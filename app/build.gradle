@@ -40,7 +40,7 @@ dependencies {
     compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
     compile "com.google.android.gms:play-services-maps:$GOOGLE_PLAY_VERSION"
     compile "com.google.android.gms:play-services-location:$GOOGLE_PLAY_VERSION"
-
+    compile 'com.google.maps.android:android-maps-utils:0.3+'
     // core
     compile 'org.parceler:parceler-api:1.1.5'
     apt 'org.parceler:parceler:1.1.5'
@@ -64,8 +64,6 @@ dependencies {
     compile 'com.github.medyo:fancybuttons:1.8.1'
     compile 'jp.wasabeef:glide-transformations:2.0.0'
 
-
-
     // Auto Value
     // Replace provided dependency below with official AutoValue once this issue is fixed
     // https://github.com/google/auto/issues/268
@@ -82,7 +80,6 @@ dependencies {
     apt daggerCompiler
     testApt daggerCompiler
     androidTestApt daggerCompiler
-
 
     // Unit tests dependencies
     testCompile jUnit

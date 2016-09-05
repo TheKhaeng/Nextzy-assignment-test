@@ -17,6 +17,8 @@ import com.example.thekhaeng.androidpokemongochallenge.http.ApiService;
 import com.example.thekhaeng.androidpokemongochallenge.http.dao.MessageCatchDao;
 import com.example.thekhaeng.androidpokemongochallenge.http.dao.PokemonDao;
 import com.example.thekhaeng.androidpokemongochallenge.login.ProfileManager;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
 
 import org.parceler.Parcels;
 
@@ -39,6 +41,9 @@ public class PokemonService extends Service{
     private final IBinder mBinder = new LocalBinder();
     @Inject ApiService apiService;
     @Inject ProfileManager profileManager;
+
+    private int index;
+    private int currentCircle;
 
     @Nullable
     @Override
@@ -81,13 +86,47 @@ public class PokemonService extends Service{
 
     private long getRefreshTime(){
         Random r = new Random();
-        long start = 10000;
+        long start = 20000;
         long end = 30000;
-        return start + (long)(r.nextDouble()*(end - start)); // random 10 - 30 sec
+        return start + (long) ( r.nextDouble() * ( end - start ) ); // random 10 - 30 sec
     }
+//
+//    public LatLng pointOnCircle( float radius, LatLng midpoint ){
+//        // Convert from degrees to radians via multiplication by PI/180
+//
+//        double angleInDegrees = 180 / ( Math.PI * currentCircle );
+//        LatLng point = SphericalUtil.computeOffset( midpoint, radius, angleInDegrees );
+//
+//        return point;
+//    }
 
     public void refresh(){
-
+        // TODO1: 9/5/2016 search pokemon around 2km
+//        double lat;
+//        double lng;
+//
+//        if( currentCircle == 0 ){
+//            currentCircle += 1;
+//        }else if( 100 * index > 2 * Math.PI * currentCircle * 100 ){
+//            currentCircle += 1;
+//            index = 0;
+//        }else if( currentCircle > 5 ){
+//            currentCircle = 0;
+//            index = 0;
+//        }
+//        LatLng latLng = pointOnCircle( 100 * currentCircle, new LatLng( C.BASE_LAT, C.BASE_LNG ) );
+//        lat = latLng.latitude;
+//        lng = latLng.longitude;
+//        index += 1;
+//
+//        Bundle data = new Bundle();
+//        data.putDouble( "test1", lat );
+//        data.putDouble( "test2", lng );
+//        Timber.i( "refresh: currentCircle" + currentCircle );
+//        Timber.i( "refresh: index" + index );
+//        Timber.i( "refresh: lat" + lat + " lng" + lng );
+//        searchPokemon();
+//        MainBus.getInstance().post( new EventBus( 100, data ) );
 
 
         apiService.catchable( profileManager.getLoginToken().getToken(),
@@ -119,7 +158,7 @@ public class PokemonService extends Service{
 
     public void startPokemonCountTimeDelete( ArrayList<PokemonDao> pokemons ){
         for( final PokemonDao pokemon : pokemons ){
-            new Thread( new DeletePokemonRunnale( pokemon ) ).start();
+             new DeletePokemonRunnale(pokemon , Long.parseLong( pokemon.getExTime()), 1000 ).start();
         }
     }
 
@@ -134,24 +173,25 @@ public class PokemonService extends Service{
     }
     //</editor-fold>
 
-    private class DeletePokemonRunnale implements Runnable{
+    private class DeletePokemonRunnale extends CountDownTimer{
         private PokemonDao pokemon;
-        public DeletePokemonRunnale( PokemonDao pokemonDao ){
+
+        public DeletePokemonRunnale( PokemonDao pokemonDao ,long millisInFuture, long countDownInterval) {
+            super(millisInFuture,countDownInterval);
             this.pokemon = pokemonDao;
         }
 
         @Override
-        public void run(){
-            new CountDownTimer( Long.parseLong( pokemon.getExTime() ), 1000 ){
-                public void onTick( long millisUntilFinished ){
-                }
-                public void onFinish(){
-                    Bundle data = new Bundle(  );
-                    data.putParcelable( C.POKEMON, Parcels.wrap( pokemon ) );
-                    profileManager.removePokemon( pokemon );
-                    MainBus.getInstance().post( new EventBus( EventBus.POKEMON_TIME_OUT,data) );
-                }
-            }.start();
+        public void onTick( long millisUntilFinished ){
+            
+        }
+
+        @Override
+        public void onFinish(){
+            Bundle data = new Bundle();
+            data.putParcelable( C.POKEMON, Parcels.wrap( pokemon ) );
+            profileManager.removePokemon( pokemon );
+            MainBus.getInstance().post( new EventBus( EventBus.POKEMON_TIME_OUT, data ) );
         }
     }
 

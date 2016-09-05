@@ -230,6 +230,19 @@ public class MainFragment extends BaseFragment{
                 removeMarker( pokemon );
                 break;
 
+            case 100:
+                double lat = event.getData().getDouble( "test1" );
+                double lng = event.getData().getDouble( "test2" );
+                CircleOptions circleOptions = new CircleOptions()
+                        .center( new LatLng( lat, lng ) )
+                        .strokeColor( ContextCompat.getColor( getContext(), R.color.md_red400 ) )
+                        .strokeWidth( ViewUtil.dpToPx( 1 ) )
+                        .radius( 100 ); // In meters
+                if( mMap!=null){
+                    mMap.addCircle( circleOptions );
+                }
+                break;
+
         }
     }
 
